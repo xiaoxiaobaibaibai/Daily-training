@@ -1,0 +1,55 @@
+/*
+ * @Description: learn css
+ * @Author: bai
+ * @LastEditors: bai
+ * @Date: 2019-03-11 23:09:51
+ * @LastEditTime: 2019-03-11 23:10:02
+ */
+
+
+#nav > li{     /*子选择符*/
+    background:url(folder.png) no-repeat left top;
+    padding-left: 20px;
+}
+
+h2 + p {    /*相邻同辈选择符*/
+    font-size: 1.4em;
+    color: #777;
+}
+
+h2 ~ p {
+    font-size: 1.4em;
+    color: #777;
+}
+
+abbr[title]:hover {
+    cursor: help;
+}
+
+input[type="submit"] {
+    cursor: pointer;
+}
+
+a[href^="http://"]  /*start*/
+img[src$="/abput"]
+
+::first-letter /*为元素*/ 
+
+/**
+ * 未访问过的链接
+ * ...
+ * 鼠标悬停及键盘焦点
+ */
+a:link {
+    color: blue;
+}
+
+a:visited {
+
+    color: antiquewhite;
+}
+
+a:hover,
+a:focus {
+    color: rebeccapurple;
+}
