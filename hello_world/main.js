@@ -405,7 +405,7 @@ try{
 }catch(e) {
   console.log('parsing error');
 }
-*/
+
 let Vehicle = function(){
   'use strict';
   this.price = 1000;
@@ -415,4 +415,96 @@ let Vehicle = function(){
 let v = new Vehicle();
 v.price//1000
 
-//hsiahdisahdsdasdad ceshi git
+//test git
+
+let A = {
+  name: '张三';
+  describe: function(){
+    return 'name' + this.name
+  }
+};
+
+let B = {
+  name: '李四'
+};
+
+B.describe = A.describe;
+B.describe();
+
+this === window
+function f(){
+  console.log(this === window);
+}
+
+f()
+
+let obj ={
+  foo: function() {
+    console.log(this);
+  }
+}
+
+obj.foo()//obj
+(obj.foo = obj.foo)()//window
+(false || obj.foo)()//window
+
+let f = function() {
+  console.log(this.x);
+}
+let x = 1;
+let obj = {
+  f:f,
+  x:2,
+};
+
+f() //1
+obj.f() //2
+
+var o = {
+  v: 'hello',
+  p: [ 'a1', 'a2' ],
+  f: function f() {
+    this.p.forEach(function (item) {
+      console.log(this.v + ' ' + item);
+    }, this);//将this当作foreach方法的第二个参数，固定它的运行环境。
+  }
+}
+
+
+let obj = {};
+let f = function() {
+  return this;
+};
+
+f() === window //true
+f.call(obj) === obj //true
+
+let obj = {}
+
+let a = [10,2,4,15,9];
+Math.max.apply(null,a)
+
+Array.apply(null,['a',,'b'])
+
+//数组中的forEach会跳过空元素，但不会跳过undefined
+
+Array.apply(null,a).forEach(print);
+Array.prototype.slice.apply({0:1,length:1})
+
+
+let o = new Object();
+o.f = function (){
+  console.log(this === o);
+}
+
+let f = function(){
+  o.f.apply(o);
+}
+*/
+let counter = {
+  count: 0,
+  inc: function(){
+    this.count++;
+  }
+
+}
