@@ -500,7 +500,7 @@ o.f = function (){
 let f = function(){
   o.f.apply(o);
 }
-*/
+
 let counter = {
   count: 0,
   inc: function(){
@@ -508,3 +508,111 @@ let counter = {
   }
 
 }
+
+Element.addEventListener('click',o.m.bind(o));
+
+let listener = o.m.bind(o);
+*/
+
+function f() {}
+typeof f.prototype//"Object"
+
+function Animal(name) {
+  this.name = name;
+}
+Animal.prototype.color = 'white';
+
+var cat1 = new Animal('大毛');
+var cat2 = new Animal('二毛');
+
+cat1.color // 'white'
+cat2.color // 'white'
+
+Animal.prototype.color = 'yellow';
+//那么，Object.prototype对象有没有它的原型呢？回答是Object.prototype的原型是null。null没有任何属性和方法，也没有自己的原型。因此，原型链的尽头就是null。
+Object.getPrototypeOf(Object.prototype)//null
+
+function P (){}
+P.prototype.constructor === P;
+
+function Constr() {}
+let x = new Constr();
+var y = new x.constructor();
+y instanceof Constr //true
+
+
+C.prototype.method1 = function(){};
+
+function Foo() {}
+var f = new Foo();
+f.constructor.name // "Foo"
+
+v instanceof Vehicle
+Vehicle.prototype.isPrototypeof(v);
+
+function Fubar (foo,bar){
+  if (this instanceof Fubar){
+    this._foo = foo;
+    this._bar = bat;
+  }else {
+    return new Fubar(foo,bar);
+  }
+}
+
+function Shape() {
+  this.x = 0;
+  this.y = 0;
+}
+
+Shape.prototype.move = function (x,y){
+  this.x += x;
+  this.y += y;
+  console.info('Shape moved.')
+
+};
+
+//step 1
+function Rectangle() {
+  Shape.call(this);
+}
+
+//step 1.2
+function Rectangle() {
+  this.base = Shape;
+  this.base();
+}
+
+//step 2
+Rectangle.prototype = Object.create(Shape.prototype);
+Rectangle.prototype.constructor = Rectangle;
+
+classB.prototype.print = function() {
+  classA.prototype.print.call(this);
+}
+
+//多重继承
+function M1(){
+  this.hello = 'hello';
+}
+
+function M2(){
+  this.world = 'world';
+}
+
+function S() {
+  M1.call(this);
+  M2.call(this);
+}
+
+
+//Mixin
+//M1
+S.prototype = Object.create(M1.prototype);
+//M2
+Object.assign(S.prototype,M2.prototype);
+//construct
+S.prototype.constructor = S;
+
+var s = new S();
+s.hello
+s.world
