@@ -616,3 +616,82 @@ S.prototype.constructor = S;
 var s = new S();
 s.hello
 s.world
+
+const F = function() {};
+const f = new F();
+Object.getPrototypeOf(f) === F.prototype //true
+
+Object.getPrototypeOf({}) === Object.prototype // true
+Object.getPrototypeOf(Object.prototype) === null // true
+function f() {}
+Object.getPrototypeOf(f) === Function.prototype
+Object.setPrototypeOf(a,b);
+
+
+const F = function() {
+  this.foo = 'bar';
+};
+
+const f = new F();
+//==
+const f = Object.setPrototypeOf({},F.prototype);
+F.call(f);
+
+Object.create 
+
+if (typeof Object.create !== 'function') {
+  Object.create = function (obj) {
+    function F() {}
+    F.prototype = obj;
+    return new F();
+  };
+}
+
+var obj1 = Object.create({});
+var obj2 = Object.create(Object.prototype);
+var obj3 = new Object();
+
+//Object.create方法生成的新对象，动态继承了原型。在原型上添加或修改任何方法，会立刻反映在新对象之上。
+
+
+const obj = {};
+const p = {};
+
+obj._proto_ = p;
+Object.getPrototypeOf(obj) === p //true
+
+//获取实例对象obj的原型对象，有三种方法。
+obj._proto_
+obj.constructor.prototype
+Object.getPrototypeOf(obj);
+
+
+Object.getOwnPropertyNames(Date);//don't care enumerable
+Object.keys(Date);//only get which can be enumerable
+
+Object.prototype.hasOwnProperty()//hasOwnProperty方法是 JavaScript 之中唯一一个处理对象属性时，不会遍历原型链的方法。
+
+
+function inheritedPropertyNames(obj) {
+  const props = {}
+  while(obj){
+    Object.getOwnPropertyNames(obj).forEach(function(p){
+      props[p] = true;
+
+    });
+
+    obj = Object.getPrototypeOf(obj);
+
+  }
+  return Object.getOwnPropertyNames(props);
+}
+
+//object's copy
+function copyObject(orig){
+  return Object.create(
+    Object.getPrototypeOf(orig),
+    Object.getOwnPropertyDescriptor(orig)
+  )
+}
+
+'use strict'
