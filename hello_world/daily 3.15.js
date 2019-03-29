@@ -314,3 +314,19 @@ arr.shift();//删除第一个元素，返回该元素 改变原数组
 arr.unshift();//数组的第一个位置添加元素 返回添加后的长度 改变原数组、
 arr.concat(brr);//返回新数组
 
+let timeId = setTimeout(func | code,delay)
+
+console.log(1);
+setTimeout('console.log(2)',1000);
+console.log(3);
+//set time  This指向全局
+
+var x = 1;
+var obj = {
+  x: 2,
+  y:function() {
+    console.log(this.x);
+  }
+};
+setTimeout(obj.y.bind(obj),1000)
+setInterval() //无限
