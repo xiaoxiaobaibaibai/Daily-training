@@ -265,3 +265,52 @@ JQuery.subscribe('done',f2);
       }
     })
   });
+
+
+  //并行与串行结合
+var items = [ 1, 2, 3, 4, 5, 6 ];
+var results = [];
+var running = 0;
+var limit = 2;
+
+function async(arg, callback) {
+  console.log('参数为 ' + arg +' , 1秒后返回结果');
+  setTimeout(function () { callback(arg * 2); }, 1000);
+}
+
+function final(value) {
+  console.log('完成: ', value);
+}
+
+function launcher(){
+  while(running < limit && items.length > 0){
+    const item = items.shift();
+    async(item, function(result){
+      results.push(result);
+      running--;
+      if(item.length > 0){
+        launcher();
+
+      }else if(running == 0){
+        final(results);
+
+      }
+    });
+    running++;
+  }
+}
+
+
+launcher(); 
+
+//array function
+Array.isArray(); //typeof 显示数组是Obj， 返回boolean
+const arr = [];
+arr.push(1) //末端添加，返回数组长度 改变原数组
+arr.pop(); //删除最后一个元素 返回该元素 改变原数组 对空数组使用返回unde
+//push  pop “后进先出的 栈 stack”
+arr.shift();//删除第一个元素，返回该元素 改变原数组
+//push shift “先进先出的 队列 queue”
+arr.unshift();//数组的第一个位置添加元素 返回添加后的长度 改变原数组、
+arr.concat(brr);//返回新数组
+
