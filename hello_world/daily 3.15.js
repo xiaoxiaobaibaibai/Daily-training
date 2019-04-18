@@ -24,7 +24,6 @@
 // var y = new x.constructor();
 // y instanceof Constr //true
 
-
 // C.prototype.method1 = function(){};
 
 // function Foo() {}
@@ -88,7 +87,6 @@
 //   M2.call(this);
 // }
 
-
 // //Mixin
 // //M1
 // S.prototype = Object.create(M1.prototype);
@@ -111,7 +109,6 @@
 // Object.getPrototypeOf(f) === Function.prototype
 // Object.setPrototypeOf(a,b);
 
-
 // const F = function() {
 //   this.foo = 'bar';
 // };
@@ -121,7 +118,7 @@
 // const f = Object.setPrototypeOf({},F.prototype);
 // F.call(f);
 
-// Object.create 
+// Object.create
 
 // if (typeof Object.create !== 'function') {
 //   Object.create = function (obj) {
@@ -137,7 +134,6 @@
 
 // //Object.create方法生成的新对象，动态继承了原型。在原型上添加或修改任何方法，会立刻反映在新对象之上。
 
-
 // const obj = {};
 // const p = {};
 
@@ -149,12 +145,10 @@
 // obj.constructor.prototype
 // Object.getPrototypeOf(obj);
 
-
 // Object.getOwnPropertyNames(Date);//don't care enumerable
 // Object.keys(Date);//only get which can be enumerable
 
 // Object.prototype.hasOwnProperty()//hasOwnProperty方法是 JavaScript 之中唯一一个处理对象属性时，不会遍历原型链的方法。
-
 
 // function inheritedPropertyNames(obj) {
 //   const props = {}
@@ -187,146 +181,174 @@ function f1() {
   //..
 }
 
-function f2(){
+function f2() {
   //..
 }
- function f1(callback) {
-   //..
-   callback();
-
- }
-
- f1(f2);
-
- //事件监听
-
- f1.on('done',f2);
-function f1() {
-  setTimeout(function (){
-    //..
-      f1.trigger('done');
-  },1000);
+function f1(callback) {
+  //..
+  callback();
 }
 
-JQuery.subscribe('done',f2);
- function f1(){
-   setTimeout(function(){
-     //...
-     JQuery.publish('done');
-   },1000);
- }
- //..
-  JQuery.unsubscribe('done',f2)
+f1(f2);
 
-  //串行执行
-  const items = [1,2,3,4,5,6];
-  const results = [];
+//事件监听
 
-  function async(arg,callbak){
-    console.log('参数为' + arg + ',1s后返回结果');
-    setTimeout(function (){callback(arg*2);
-    },1000);
-  }
-    function final(value){
-      console.log('完成',value);
-    }
+f1.on("done", f2);
+function f1() {
+  setTimeout(function() {
+    //..
+    f1.trigger("done");
+  }, 1000);
+}
 
-    function series(item) {
-      if(item) {
-        async( item,function(result){
-          results.push(result);
-          return series(item,shift());
-        });
-      }else {
-        return final(results[results.length - 1]);
-      }
-    }
-  series(item.shift());
+JQuery.subscribe("done", f2);
+function f1() {
+  setTimeout(function() {
+    //...
+    JQuery.publish("done");
+  }, 1000);
+}
+//..
+JQuery.unsubscribe("done", f2);
 
-  //并行执行
-  const items = [1,2,3,4,5,6];
-  const results = [];
+//串行执行
+const items = [1, 2, 3, 4, 5, 6];
+const results = [];
 
-  function async(arg,callback){
-    console.log('参数为 ' + arg +' , 1秒后返回结果');
-    setTimeout(function () { callback(arg * 2); }, 1000);
-  }
- 
-  function final(value) {
-    console.log('完成: ', value);
-  }
+function async(arg, callbak) {
+  console.log("参数为" + arg + ",1s后返回结果");
+  setTimeout(function() {
+    callback(arg * 2);
+  }, 1000);
+}
+function final(value) {
+  console.log("完成", value);
+}
 
-  items.forEach(function(item){
-    async(item,function(result){
+function series(item) {
+  if (item) {
+    async(item, function(result) {
       results.push(result);
+      return series(item, shift());
+    });
+  } else {
+    return final(results[results.length - 1]);
+  }
+}
+series(item.shift());
 
-      if(results.length === item.length){
-        final(results[results.length - 1]);
-      }
-    })
+//并行执行
+const items = [1, 2, 3, 4, 5, 6];
+const results = [];
+
+function async(arg, callback) {
+  console.log("参数为 " + arg + " , 1秒后返回结果");
+  setTimeout(function() {
+    callback(arg * 2);
+  }, 1000);
+}
+
+function final(value) {
+  console.log("完成: ", value);
+}
+
+items.forEach(function(item) {
+  async(item, function(result) {
+    results.push(result);
+
+    if (results.length === item.length) {
+      final(results[results.length - 1]);
+    }
   });
+});
 
-
-  //并行与串行结合
-var items = [ 1, 2, 3, 4, 5, 6 ];
+//并行与串行结合
+var items = [1, 2, 3, 4, 5, 6];
 var results = [];
 var running = 0;
 var limit = 2;
 
 function async(arg, callback) {
-  console.log('参数为 ' + arg +' , 1秒后返回结果');
-  setTimeout(function () { callback(arg * 2); }, 1000);
+  console.log("参数为 " + arg + " , 1秒后返回结果");
+  setTimeout(function() {
+    callback(arg * 2);
+  }, 1000);
 }
 
 function final(value) {
-  console.log('完成: ', value);
+  console.log("完成: ", value);
 }
 
-function launcher(){
-  while(running < limit && items.length > 0){
+function launcher() {
+  while (running < limit && items.length > 0) {
     const item = items.shift();
-    async(item, function(result){
+    async(item, function(result) {
       results.push(result);
       running--;
-      if(item.length > 0){
+      if (item.length > 0) {
         launcher();
-
-      }else if(running == 0){
+      } else if (running == 0) {
         final(results);
-
       }
     });
     running++;
   }
 }
 
-
-launcher(); 
+launcher();
 
 //array function
 Array.isArray(); //typeof 显示数组是Obj， 返回boolean
 const arr = [];
-arr.push(1) //末端添加，返回数组长度 改变原数组
+arr.push(1); //末端添加，返回数组长度 改变原数组
 arr.pop(); //删除最后一个元素 返回该元素 改变原数组 对空数组使用返回unde
 //push  pop “后进先出的 栈 stack”
-arr.shift();//删除第一个元素，返回该元素 改变原数组
+arr.shift(); //删除第一个元素，返回该元素 改变原数组
 //push shift “先进先出的 队列 queue”
-arr.unshift();//数组的第一个位置添加元素 返回添加后的长度 改变原数组、
-arr.concat(brr);//返回新数组
+arr.unshift(); //数组的第一个位置添加元素 返回添加后的长度 改变原数组、
+arr.concat(brr); //返回新数组
 
-let timeId = setTimeout(func | code,delay)
+let timeId = setTimeout(func | code, delay);
 
 console.log(1);
-setTimeout('console.log(2)',1000);
+setTimeout("console.log(2)", 1000);
 console.log(3);
 //set time  This指向全局
 
 var x = 1;
 var obj = {
   x: 2,
-  y:function() {
+  y: function() {
     console.log(this.x);
   }
 };
-setTimeout(obj.y.bind(obj),1000)
-setInterval() //无限
+setTimeout(obj.y.bind(obj), 1000);
+setInterval(); //无限
+/*
+父组件通过标签上面定义传值
+<template>
+<Main :obj="data"></Main>
+
+
+  父组件通过标签上面定义传值
+  <template>
+    <Main : obj="data"></Main>
+</template >
+  <script>
+    引入子组件
+    import Main form "./main"
+
+    exprot default{
+      name: "parent",
+        data(){
+            return {
+      data: "我要向子组件传递数据"
+}
+},
+初始化组件
+        components:{
+      Main
+    }
+    }
+</script>
+*/
